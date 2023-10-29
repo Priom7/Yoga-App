@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="background">#F9F3FF</color>
+    <color name="buttonColor">#BEADFA</color>
+    <color name="cardColor">#EBE5FF</color>
+    <color name="btn_add_color">#95F204</color>
+    <color name="btn_edit_color">#FFFF00</color>
+    <color name="btn_remove_color">#910012</color>
+    <color name="bottom_nav_color">#BEADFA</color>
+</resources>
