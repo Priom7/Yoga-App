@@ -5,12 +5,13 @@
         android:enabled="true"
         android:icon="@drawable/home"
         android:title="@string/home"
-        android:iconTint="@color/white"/>
+
+        />
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/inventory"
         android:enabled="true"
-        android:icon="@drawable/shopping_cart"
-        android:title="@string/cart" />
+        android:icon="@drawable/add"
+        android:title="@string/inventory" />
     <item
         android:id="@+id/dashboard"
         android:enabled="true"

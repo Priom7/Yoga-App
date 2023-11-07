@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".InventoryFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Course Title -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/courseTitleTextInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Course Title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/courseTitleEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Type of Course -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/typeOfCourseTextInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type of Course">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/typeOfCourseEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Duration of Course -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/durationTextInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Duration of Course">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/durationEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Days of the week -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/daysOfWeekTextInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Days of the week">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/daysOfWeekEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Time of the day -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/timeOfDayTextInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Time of the day">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/timeOfDayEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Capacity of the Course -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/capacityTextInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Capacity of the Course">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/capacityEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Description of the Course -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/descriptionTextInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description of the Course">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descriptionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Adding Schedules of Class Section -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Schedules of Class"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <!-- Date of the Course for Schedules -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/dateOfCourseTextInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date of the Course for Schedules">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/dateOfCourseEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Instructor of the Course for Schedules -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/instructorTextInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Instructor of the Course for Schedules">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/instructorEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Details of the Course for Schedules -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/detailsTextInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Details of the Course for Schedules">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/detailsEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/timePickerButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:icon="@drawable/alarm"
+            app:iconGravity="textStart"
+            app:iconTint="@color/buttonColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pick Time" />
+
+        <!-- Add a Button or Action to Save the Form -->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Save" />
+    </LinearLayout>
+
+</FrameLayout>

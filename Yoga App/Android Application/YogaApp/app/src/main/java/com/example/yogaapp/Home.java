@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class Home extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     FirebaseAuth mAuth;
-//    Button btn_logout;
+    //    Button btn_logout;
 //    TextView tv_welcome;
     FirebaseUser currentUser;
     NavigationBarView bottomNavigationView;
@@ -59,6 +59,8 @@ public class Home extends AppCompatActivity implements NavigationBarView.OnItemS
             fragment = new DashboardFragment();
         } else if (id == R.id.home) {
             fragment = new Home_Fragment();
+        } else if (id == R.id.inventory) {
+            fragment = new InventoryFragment();
         }
         if (fragment != null) {
             loadFragment(fragment);
