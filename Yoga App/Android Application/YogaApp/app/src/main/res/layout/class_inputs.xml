@@ -1,0 +1,110 @@
+<!-- item_class_input.xml -->
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:elevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Class Name -->
+        <EditText
+            android:id="@+id/classTitleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Name"
+            android:drawablePadding="8dp" />
+
+        <!-- Class Description -->
+        <EditText
+            android:id="@+id/classDescriptionEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Description"
+            android:drawablePadding="8dp" />
+
+        <!-- Class Date -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/datePickerButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pick Date" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/classDateTextInputLayout"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Date">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/classDateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:focusable="false"
+                android:drawablePadding="8dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Class Instructor -->
+        <EditText
+            android:id="@+id/classInstructorEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Instructor"
+            android:drawablePadding="8dp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:backgroundTint="@color/btn_edit_color"
+            android:src="@drawable/account_circle" />
+
+        <Button
+            android:id="@+id/imageUploadButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Pick Image" />
+
+        <!-- Class Instructor Rating -->
+        <EditText
+            android:id="@+id/classInstructorRatingEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Instructor Rating"
+            android:drawablePadding="8dp" />
+
+        <!-- Class Instructor Email -->
+        <EditText
+            android:id="@+id/classInstructorEmailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Class Instructor Email"
+            android:drawablePadding="8dp" />
+
+        <!-- Edit and Delete Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <ImageView
+                android:id="@+id/removeButton"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/delete"
+                android:contentDescription="Delete Button" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

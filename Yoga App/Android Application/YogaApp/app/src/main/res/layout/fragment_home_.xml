@@ -39,8 +39,8 @@
             android:layout_margin="10dp"
             android:background="@color/buttonColor"
             android:backgroundTint="@color/buttonColor"
-            android:padding="10dp"
-            android:src="@drawable/ic_launcher_foreground"></ImageView>
+
+            android:src="@drawable/image2"></ImageView>
 
         <HorizontalScrollView
             android:layout_width="wrap_content"
@@ -75,7 +75,7 @@
                             android:layout_gravity="center"
                             android:layout_margin="10dp"
                             android:contentDescription="@string/app_name"
-                            android:src="@drawable/account_circle" />
+                            android:src="@drawable/image1" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
                             android:layout_gravity="bottom|center_horizontal"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
-                            android:text="@string/app_name"
+                            android:text="Family Yoga"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 
@@ -116,8 +116,8 @@
                             android:layout_height="200dp"
                             android:layout_gravity="center"
                             android:layout_margin="10dp"
-                            android:contentDescription="@string/app_name"
-                            android:src="@drawable/account_circle" />
+                            android:contentDescription="Flow Yoga"
+                            android:src="@drawable/image3" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -136,6 +136,37 @@
             </LinearLayout>
 
         </HorizontalScrollView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/uploadToCloudBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                </Button>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Data For Cloud">
+
+                </TextView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/jsonDataTV">
+
+                </TextView>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
+
 
 </FrameLayout>

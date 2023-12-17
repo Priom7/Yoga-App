@@ -4,9 +4,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcel;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +22,15 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DashboardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements DataTransferListener {
     View rootView;
-    UserAdapter adapter;
+    CourseAdapter adapter;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,7 +73,8 @@ public class DashboardFragment extends Fragment {
     }
 
     private RecyclerView recyclerView;
-    private ArrayList<User> userList;
+    private ArrayList<Course> courseList;
+    private ArrayList<ClassInfo> courseClassList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,40 +84,93 @@ public class DashboardFragment extends Fragment {
         // Inflate the layout for this fragment
 
         rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        courseList = new ArrayList<>();
+        courseClassList = new ArrayList<>();
 
 //        RecyclerView recyclerView = rootView.findViewById(R.id.recyclerView); // Replace with your RecyclerView's ID
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity())); // Use LinearLayoutManager or GridLayoutManager as needed
 
         recyclerView = rootView.findViewById(R.id.recyclerView);
-        userList = new ArrayList<>();
-        db.collection("users")
+        courseList = new ArrayList<>();
+
+
+
+        // Assuming db is your FirebaseFirestore instance
+
+        db.collection("courses")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                // Convert the Firestore document to a User object
-                                User user = document.toObject(User.class);
+                            for (QueryDocumentSnapshot courseDocument : task.getResult()) {
+                                Course course = courseDocument.toObject(Course.class);
+                                String courseId = courseDocument.getId(); // Get the document ID as courseId
+                                course.setId(courseId);
+                                courseList.add(course);
+                                // Now, query classes with the courseId
+                                db.collection("classes")
+                                        .whereEqualTo("courseId", courseId)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot classDocument : task.getResult()) {
+                                                        // Here, you can handle each class associated with the current course
+                                                        ClassInfo currentClass = classDocument.toObject(ClassInfo.class);
+                                                        // Do something with the class
+                                                        String classId = classDocument.getId(); // Get the document ID as classId
+                                                        currentClass.setId(classId);
+                                                        courseClassList.add(currentClass);
+                                                        course.addClassInfo(currentClass);
+                                                    }
+                                                    Log.i( "CourseWithClases: ", "data" + course.getCourseName());
+                                                    adapter = new CourseAdapter(getContext(), courseList);
+                                                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                                    adapter.setCourseClickListener(DashboardFragment.this);
+                                                    recyclerView.setAdapter(adapter);
 
-                                Log.i("User222", user.getUserName());
-                                // Add the user object to the userList
-                                userList.add(user);
-                                Toast.makeText(getActivity(), document.getId() + " => " + document.getData(), Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Log.e("FirestoreQuery", "Error getting classes: " + task.getException());
+                                                }
+                                            }
+                                        });
                             }
-
-                            adapter = new UserAdapter(getContext(), userList);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            recyclerView.setAdapter(adapter);
-
-
                         } else {
-                            Toast.makeText(getActivity(), "Error getting documents.", Toast.LENGTH_SHORT).show();
+                            Log.e("FirestoreQuery", "Error getting courses: " + task.getException());
                         }
                     }
                 });
 
 
+
+
         return rootView;
     }
+
+    @Override
+    public void onDataTransfer(Course data) {
+
+        // Handle the data transfer (course ID) here
+        // Change the layout or navigate to the InventoryFragment
+        // using FragmentTransaction
+        // For example, replace the current fragment with InventoryFragment
+        InventoryFragment inventoryFragment = new InventoryFragment();
+        loadFragment(inventoryFragment, data);
+        Log.i("DashboardFragment", "Course ID: " + data);
+
+    }
+    void loadFragment(Fragment fragment, Course course) {
+        Bundle data = new Bundle();
+        data.putSerializable("course", course);
+
+        fragment.setArguments(data);
+
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.relativelayout, fragment)
+                .commit();
+    }
+
 }

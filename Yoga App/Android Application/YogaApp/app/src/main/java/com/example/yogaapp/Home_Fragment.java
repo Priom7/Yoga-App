@@ -2,7 +2,9 @@ package com.example.yogaapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +15,20 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +42,9 @@ public class Home_Fragment extends Fragment {
     TextView tv_welcome;
     FirebaseUser currentUser;
     View rootView;
+    private ArrayList <Course> courseList;
+    private ArrayList <ClassInfo> courseClassList;
+    private CourseWithClasses dataForCloud;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -72,21 +87,7 @@ public class Home_Fragment extends Fragment {
         }
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-//        tv_welcome = getView().findViewById(R.id.tv_welcome);
-//        btn_logout = getView().findViewById(R.id.btn_logout);
-//        if (currentUser == null) {
-//            Intent intent = new Intent(getActivity(), Login.class);
-//            startActivity(intent);
-//            getActivity().finish();
-//        } else {
-//            tv_welcome.setText("Welcome " + currentUser.getEmail());
-//        }
-//        btn_logout.setOnClickListener(v -> {
-//            mAuth.signOut();
-//            Intent intent = new Intent(getActivity(), Login.class);
-//            startActivity(intent);
-//            getActivity().finish();
-//        });
+
 
     }
 
@@ -94,6 +95,7 @@ public class Home_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View fragmentView = inflater.inflate(R.layout.fragment_home_, container, false);
         rootView = inflater.inflate(R.layout.fragment_home_, container, false);
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -112,6 +114,94 @@ public class Home_Fragment extends Fragment {
             startActivity(intent);
             getActivity().finish();
         });
+
+
+
+        courseList = new ArrayList<>();
+        courseClassList = new ArrayList<>();
+        dataForCloud = new CourseWithClasses();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        db.collection("courses")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot courseDocument : task.getResult()) {
+                                Course course = courseDocument.toObject(Course.class);
+                                String courseId = courseDocument.getId(); // Get the document ID as courseId
+                                course.setId(courseId);
+                                courseList.add(course);
+                                // Now, query classes with the courseId
+                                db.collection("classes")
+                                        .whereEqualTo("courseId", courseId)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot classDocument : task.getResult()) {
+                                                        // Here, you can handle each class associated with the current course
+                                                        ClassInfo currentClass = classDocument.toObject(ClassInfo.class);
+                                                        // Do something with the class
+                                                        String classId = classDocument.getId(); // Get the document ID as classId
+                                                        currentClass.setId(classId);
+                                                        courseClassList.add(currentClass);
+                                                        course.addClassInfo(currentClass);
+                                                    }
+                                                    Log.i( "CourseWithClases: ", "data" + course.getCourseName());
+                                                    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                                                    dataForCloud.setUserId(currentUser.getUid());
+                                                    dataForCloud.setCourses(courseList);
+                                                    String jsonString = gson.toJson(dataForCloud);
+
+                                                    TextView jsonTV = rootView.findViewById(R.id.jsonDataTV);
+                                                    jsonTV.setText(jsonString);
+                                                    Button uploadToCloudBtn = rootView.findViewById(R.id.uploadToCloudBtn);
+
+                                                    uploadToCloudBtn.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            ApiClient.postData("https://stuiis.cms.gre.ac.uk/COMP1424CoreWS/comp1424cw/SubmitClasses", jsonString, new ApiClient.ApiCallback() {
+                                                                @Override
+                                                                public void onSuccess(String result) {
+                                                                    // Handle the successful API response
+                                                                    Toast.makeText(getContext(), "Data Upload Successful " + result, Toast.LENGTH_SHORT).show();
+                                                                }
+
+                                                                @Override
+                                                                public void onFailure(Exception e) {
+                                                                    // Handle API call failure
+                                                                    // 'e' contains the exception details
+                                                                    Toast.makeText(getContext(), "Data Upload failed with error:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+
+
+                                                } else {
+                                                    Log.e("FirestoreQuery", "Error getting classes: " + task.getException());
+                                                }
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.e("FirestoreQuery", "Error getting courses: " + task.getException());
+                        }
+                    }
+                });
+
+
+
+
+
+
+
+
         return rootView;
     }
 }
