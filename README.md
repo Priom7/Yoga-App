@@ -1,7 +1,11 @@
-#Admin Profile
+## Admin Profile
 <p align="center">
-  <img src="https://github.com/Priom7/Yoga-App/blob/main/Yoga%20App/yogaAppAdmin.png" alt="Cover Image" width="200" height="300"> 
+  <img src="https://github.com/Priom7/Yoga-App/blob/main/Yoga%20App/yogaAppAdmin.png" alt="Cover Image"> 
 </p>
 
 
-#Client Profile
+## Client Profile
+
+<p align="center">
+  <img src="https://github.com/Priom7/Yoga-App/blob/main/Yoga%20App/yogaAppClient.png" alt="Cover Image"> 
+</p>
